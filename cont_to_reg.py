@@ -132,8 +132,9 @@ def read_fits(fits_filename):
 ######################################################################################
 
 
-LOFAR_IM_PATH = "/disk1/rohitk/ELN1_project/ELAIS-N1/image_full_ampphase_di_m.NS_shift.int.facetRestored.blanked-crop.fits"
-LOFAR_RMS_PATH = "/disk1/rohitk/ELN1_project/ELAIS-N1/image_full_ampphase_di_m.NS_shift.blanked.scaled.rms.fits"
+LOFAR_IM_PATH = "../data/image_full_ampphase_di_m.NS_shift.int.facetRestored.blanked-crop.fits"
+LOFAR_RMS_PATH = "../data/image_full_ampphase_di_m.NS_shift.blanked.scaled.rms.fits"
+
 
 # Read in the image and the RMS map and store the data
 lofar_image_data, lofar_im_wcs = read_fits(LOFAR_IM_PATH)
@@ -145,7 +146,7 @@ rms_image_data = hdul_rms[0].data[0, 0, :, :]
 cata = Table.read("workflow.txt", format='ascii')
 sname_all = cata["Source_Name"]
 
-final_fname = glob.glob("/disk3/rohitk/final_raido_catalogues/EN1/final-v*.fits")[-1]
+final_fname = glob.glob("../data/final_cross_match_catalogue-v0.3.fits")[-1]
 mlfin_srl = Table.read(final_fname, character_as_bytes=False)
 
 t1 = time.time()

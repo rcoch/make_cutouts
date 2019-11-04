@@ -69,7 +69,7 @@ else:
     ind_to_plot = inds_to_check[0]
 
 # mlfin_srl = Table.read("/disk1/rohitk/ELN1_project/eln1_workflow/iterated_endpoints/EN1_ML_RUN_fin_overlap_srl_workflow_fixed_fclean.fits")
-final_fname = glob.glob("/disk3/rohitk/final_raido_catalogues/EN1/final-v*.fits")[-1]
+final_fname = glob.glob("../data/final_cross_match_catalogue-v0.3.fits")[-1]
 mlfin_srl = Table.read(final_fname)
 
 ra_s = mlfin_srl["RA"][mlfin_srl["Source_Name"] == prefilt_out["Source_Name"][ind_to_plot]]
@@ -78,7 +78,7 @@ dec_s = mlfin_srl["DEC"][mlfin_srl["Source_Name"] == prefilt_out["Source_Name"][
 cent_coord = SkyCoord(ra_s, dec_s, unit='deg', frame='icrs')
 
 # Load in the optical and spitzer-chi2 catalogue
-cata_opt = Table.read("/disk3/rohitk/ELAIS_opt_swarped/dual_analysis/combine/MASTER_catalogue/EN1_MASTER_opt_spitzer_merged_cedit_apcorr_adduncat_extra_run2_lite.fits")
+cata_opt = Table.read("../data/EN1_MASTER_opt_spitzer_merged_cedit_apcorr_adduncat_lite.fits")
 # cata_mir = Table.read("/disk3/rohitk/ELAIS_opt_swarped/dual_sex/chi2salldet/18_12_2018_1/cat_chi2sall_g.fits", hdu=2)
 
 opt_coords = SkyCoord(cata_opt["ALPHA_J2000"], cata_opt["DELTA_J2000"], unit='deg', frame='icrs')
@@ -133,7 +133,7 @@ os.system("cp {0}/ellipse_{1}.reg {2}".format(OUTDIR_POS, prefilt_out["Source_Na
 print("***** Plotting source: #{0}: {1} *****\n".format(ind_to_plot, prefilt_out["Source_Name"][ind_to_plot]))
 
 # Show the ds9 plot of sources
-os.system("ds9 {0}/{1}_radio.fits -zscale {0}/{1}_i.fits -zscale {0}/{1}_sw2.fits -zscale -match frame wcs -regions load all '{2}*.reg' -regions load all EN1_radio_cool_sources_pos.reg &".format("opt_mir_imgs", prefilt_out["Source_Name"][ind_to_plot], POS_LATEST))
+os.system("ds9 {0}/{1}_radio.fits -zscale {0}/{1}_i.fits -zscale {0}/{1}_sw2.fits -zscale -match frame wcs -regions load all '{2}*.reg' &".format("opt_mir_imgs", prefilt_out["Source_Name"][ind_to_plot], POS_LATEST))
 
 # Also the png plot
 # os.system("display {0}_j.png & ".format(prefilt_out["Source_Name"][ind_to_plot]))
@@ -145,7 +145,7 @@ print("***** Now enter some flag here which you can define later ***** \n",
 if "Sep" in prefilt_out.colnames:
     print("Separation between radio source and visual click: {0} arcsec".format(prefilt_out["Sep"][ind_to_plot]))
 if "z1_median" in prefilt_out.colnames:
-    print("Redshift of radio source (best possible radio source): {0}".format(prefilt_out["z1_median"][ind_to_plot]))
+    print("Redshift of above radio source (best possible radio source): {0}".format(prefilt_out["z1_median"][ind_to_plot]))
 
 flag_update = int(float(input("Enter the flag for this source. If not sure, enter '-2' to move on: ")))
 
